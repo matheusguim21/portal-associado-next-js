@@ -4,7 +4,6 @@ import { AuthLogo } from '@/components/auth/AuthLogo'
 import { ThemeToggle } from '../theme-toggle'
 import { DiaTextReveal } from '../ui/dia-text-reveal'
 import { BrandPanel } from './BrandPanel'
-import { RightPanelStats } from './RightPanelStats'
 
 interface AuthLayoutProps {
   title?: string
@@ -25,36 +24,36 @@ export function AuthLayout({
 }: AuthLayoutProps) {
   return (
     <div className="relative flex min-h-screen">
-      {/* ── Painel de marca (esquerda) ─────────────────────────────── */}
+      {/* ── Imagem de fundo única cobrindo toda a tela ── */}
+      <Image
+        src="/logos/imagem-bg.png"
+        alt=""
+        fill
+        priority
+        aria-hidden
+        className="object-cover object-center"
+      />
+
+      {/* ── Overlay petróleo sobre toda a tela ── */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            'linear-gradient(155deg, rgba(6, 82, 105, 0.85) 0%, rgba(6, 50, 62, 0.90) 45%, rgba(8, 16, 20, 0.96) 100%)',
+        }}
+      />
+
+      {/* ── Painel de marca (esquerda) — apenas conteúdo, sem imagem própria ── */}
       <BrandPanel />
 
-      {/* ── Painel de acesso (direita) ─────────────────────────────── */}
-      <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-4 py-12 sm:px-8">
-        {/* Mesma imagem de fundo do BrandPanel */}
-        <Image
-          src="/logos/imagem-bg.png"
-          alt=""
-          fill
-          priority
-          aria-hidden
-          className="object-cover object-center"
-        />
-        {/* Overlay petróleo idêntico ao BrandPanel */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          aria-hidden
-          style={{
-            background:
-              'linear-gradient(155deg, rgba(6, 82, 105, 0.88) 0%, rgba(6, 50, 62, 0.92) 45%, rgba(8, 16, 20, 0.97) 100%)',
-          }}
-        />
-
+      {/* ── Painel de acesso (direita) ── */}
+      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-8">
         <ThemeToggle className="absolute right-5 top-5 z-10" />
 
-        {/* Conteúdo central */}
         <div
           className={cn(
-            'relative z-10 flex w-full justify-center',
+            'flex w-full justify-center',
             wide ? 'max-w-[28rem]' : 'max-w-[22rem]',
           )}
         >
@@ -95,11 +94,6 @@ export function AuthLayout({
           ) : (
             <div className="text-center">{children}</div>
           )}
-        </div>
-
-        {/* Estatísticas do footer — visíveis apenas quando o BrandPanel está oculto (< lg) */}
-        <div className="relative z-10 mt-8 w-full lg:hidden" style={{ maxWidth: wide ? '28rem' : '22rem' }}>
-          <RightPanelStats />
         </div>
       </main>
     </div>

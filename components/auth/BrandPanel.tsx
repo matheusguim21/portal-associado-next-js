@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import { BarChart3, Music2, ShieldCheck, Sparkles } from 'lucide-react'
 import { AuthLogo } from '@/components/auth/AuthLogo'
 import { DiaTextReveal } from '../ui/dia-text-reveal'
@@ -101,25 +100,8 @@ export function BrandPanel() {
   }, [paused])
 
   return (
-    <aside className="relative hidden w-[58%] max-w-[46rem] flex-col overflow-hidden lg:flex">
-      <Image
-        src="/logos/imagem-bg.png"
-        alt=""
-        fill
-        priority
-        aria-hidden
-        className="object-cover object-center"
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden
-        style={{
-          background:
-            'linear-gradient(155deg, rgba(6, 82, 105, 0.82) 0%, rgba(6, 50, 62, 0.86) 45%, rgba(8, 16, 20, 0.94) 100%)',
-        }}
-      />
-
-      <div className="relative z-10 flex h-full flex-col justify-between p-10 xl:p-14">
+    <aside className="relative z-10 hidden w-[58%] max-w-[46rem] flex-col lg:flex">
+      <div className="flex h-full flex-col justify-between p-10 xl:p-14">
         <div className="flex items-center justify-between">
           <AuthLogo className="mx-0 h-12" />
           <span className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-[rgba(250,250,250,0.82)] backdrop-blur-sm">
