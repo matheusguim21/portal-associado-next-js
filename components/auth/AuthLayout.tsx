@@ -4,6 +4,7 @@ import { AuthLogo } from '@/components/auth/AuthLogo'
 import { ThemeToggle } from '../theme-toggle'
 import { DiaTextReveal } from '../ui/dia-text-reveal'
 import { BrandPanel } from './BrandPanel'
+import { RightPanelStats } from './RightPanelStats'
 
 interface AuthLayoutProps {
   title?: string
@@ -23,38 +24,34 @@ export function AuthLayout({
   children,
 }: AuthLayoutProps) {
   return (
-    <div className="relative flex min-h-screen bg-background">
+    <div className="relative flex min-h-screen">
       {/* ── Painel de marca (esquerda) ─────────────────────────────── */}
       <BrandPanel />
 
       {/* ── Painel de acesso (direita) ─────────────────────────────── */}
-      <main className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-10 sm:px-8">
-        {/* Fundo que irradia a partir do painel esquerdo */}
+      <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-4 py-12 sm:px-8">
+        {/* Mesma imagem de fundo do BrandPanel */}
         <Image
           src="/logos/imagem-bg.png"
           alt=""
           fill
           priority
           aria-hidden
-          className="scale-110 object-cover object-left opacity-40 dark:opacity-30"
+          className="object-cover object-center"
         />
-        {/* Degradê horizontal: lado esquerdo aberto (imagem visível), dissipando até o fundo sólido à direita */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/40 via-background/80 to-background"
-          aria-hidden
-        />
-        {/* Brilho petróleo irradiando da borda esquerda */}
+        {/* Overlay petróleo idêntico ao BrandPanel */}
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(120% 90% at 0% 50%, rgba(11, 82, 105, 0.30) 0%, rgba(11, 82, 105, 0.10) 35%, transparent 60%)',
+              'linear-gradient(155deg, rgba(6, 82, 105, 0.88) 0%, rgba(6, 50, 62, 0.92) 45%, rgba(8, 16, 20, 0.97) 100%)',
           }}
         />
 
         <ThemeToggle className="absolute right-5 top-5 z-10" />
 
+        {/* Conteúdo central */}
         <div
           className={cn(
             'relative z-10 flex w-full justify-center',
@@ -62,10 +59,11 @@ export function AuthLayout({
           )}
         >
           {showCard ? (
-            <div className="w-full overflow-hidden rounded-2xl border border-white/15 p-6 pt-7 text-[#fafafa] shadow-[0_18px_50px_rgba(6,50,62,0.35)] sm:p-7"
+            <div
+              className="w-full overflow-hidden rounded-2xl border border-white/15 p-6 pt-7 text-[#fafafa] shadow-[0_18px_50px_rgba(6,50,62,0.45)] sm:p-7"
               style={{
-                background:
-                  'linear-gradient(160deg, #0b5269 0%, #074457 50%, #06303e 100%)',
+                background: 'rgba(255,255,255,0.07)',
+                backdropFilter: 'blur(16px)',
               }}
             >
               {showLogo && (
@@ -97,6 +95,11 @@ export function AuthLayout({
           ) : (
             <div className="text-center">{children}</div>
           )}
+        </div>
+
+        {/* Estatísticas do footer — visíveis apenas quando o BrandPanel está oculto (< lg) */}
+        <div className="relative z-10 mt-8 w-full lg:hidden" style={{ maxWidth: wide ? '28rem' : '22rem' }}>
+          <RightPanelStats />
         </div>
       </main>
     </div>
